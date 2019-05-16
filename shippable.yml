@@ -1,3 +1,4 @@
+
 pipelines:
   - name: pipeline
     steps:
@@ -6,13 +7,13 @@ pipelines:
          setup:
            runtime:
              type: image
-             image:
-               auto:
+            # image:
+               #auto:
 #                  language: none            
          execution:
            onExecute:
              - echo TEST_FOR_NONE
-             - node -v
+#              - node -v
 
        - name: selected_version
          type: bash
@@ -46,4 +47,4 @@ pipelines:
          execution:
            onExecute:
              - echo - echo TEST_FOR_DEFAULT_VERSION
-             - node -v            
+             - node -v   
