@@ -1,5 +1,5 @@
 resources:
-  - name: sample_pp
+  - name: sample_ppp
     type: gitRepo
     repoPath: bindushree16/test1
     configuration:
@@ -18,7 +18,7 @@ pipelines:
 #           priority: 2
         triggeredBy:
           resources:
-            - sample_pp
+            - sample_ppp
         execution:
           onExecute:
             - printenv
