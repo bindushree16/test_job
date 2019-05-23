@@ -1,51 +1,24 @@
-
+resources:
+  - name: sample_pp
+    type: gitRepo
+    repoPath: bindushree16/test1
+    configuration:
+      integrationName: bindu_github
+      branches:
+        only: master
+    initialVersion:
+      sha: master
+      
 pipelines:
-  - name: pipeline
+  - name: pipe1
     steps:
-       - name: none_language
-         type: bash
-         setup:
-           runtime:
-             type: image
-            # image:
-               #auto:
-#                  language: none            
-         execution:
-           onExecute:
-             - echo TEST_FOR_NONE
-#              - node -v
-
-       - name: selected_version
-         type: bash
-         requires:
-           steps:
-             - none_language
-         setup:
-           runtime:
-             type: image
-             image:
-               auto:
-                 language: nodejs
-                 versions:
-                   - 8.16.0                      
-         execution:
-           onExecute:
-             - echo TEST_FOR_SELECTED_VERSION
-             - node -v
-             - sleep 65m
-             
-       - name: default_version
-         type: bash
-         requires:
-           steps:
-             - none_language
-         setup:
-           runtime:
-             type: image
-             image:
-               auto:
-                 language: nodejs                  
-         execution:
-           onExecute:
-             - echo - echo TEST_FOR_DEFAULT_VERSION
-             - node -v   
+      - name: testpipelines
+        type: bash
+#         configuration:
+#           priority: 2
+        triggeredBy:
+          resources:
+            - sample_pp
+        execution:
+          onExecute:
+            - printenv
