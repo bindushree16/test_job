@@ -1,7 +1,7 @@
 resources:
   - name: sample_ppp
     type: gitRepo
-    repoPath: bindushree16/test1
+    repoPath: bindushree16/c7node
     configuration:
       integrationName: bindu_github
       branches:
@@ -14,6 +14,12 @@ pipelines:
     steps:
       - name: testpipelines
         type: bash
+          runtime:            
+            type: image
+            image:
+              auto:
+                language: nodjs
+                versions: 10.15.3
 #         configuration:
 #           chronological: false 
 #           priority: 2
@@ -23,7 +29,8 @@ pipelines:
         execution:
           onExecute:
             - printenv
-            - echo "hi"
+            - genrsa -out key.pem 1024
+            - openssl version
             
       - name: testpipel
         type: bash 
