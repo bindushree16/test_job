@@ -1,7 +1,8 @@
+
 resources:
-  - name: sample_job
+  - name: sample_testjob
     type: gitRepo
-    repoPath: bindushree16/c7node
+    repoPath: bindushree16/test_job
     configuration:
       integrationName: bindu_github
       branches:
@@ -10,36 +11,73 @@ resources:
       sha: master
       
 pipelines:
-  - name: pipeline11
+  - name: pipelinejob
     steps:
-      - name: testpipelines
+      - name: test1
         type: bash
+        configuration:
+          affinityGroup: kermit
+          nodePool: kermit_ubuntu_pool       
+        setup: 
+          runtime:            
+            type: image
+            image:
+              custom:
+                name: drydock/c7node
+                tag: master
+                options: ""
+        triggeredBy:
+          resources:
+            - sample_testjob
+        execution:
+          onStart:
+            - printenv
+          onExecute:
+            - printenv
+            - echo "hi"
+
+      - name: test2
+        type: bash
+        configuration:
+          affinityGroup: kamal
+          nodePool: kermit_ubuntu18_pool
         setup:
           runtime:            
             type: image
             image:
-              auto:
-                language: nodejs
-                versions: 
-                  - 10.15.3
-#         configuration:
-#           chronological: false 
-#           priority: 2
-        triggeredBy:
-          resources:
-            - sample_job
-        execution:
-          onExecute:
-            - printenv
-            - genrsa -out key.pem 1024
-            - openssl version
-            
-      - name: testpipel
-        type: bash 
+              custom:
+                name: drydock/u16node
+                tag: master
+                options: ""
         triggeredBy:
           steps:
-            - testpipelines
+            - test1
         execution:
+          onStart:
+            - printenv
           onExecute:
+            - printenv
+            - echo "hey"
+
+      - name: test3
+        type: bash
+        configuration:
+          affinityGroup: kamal
+          nodePool: kermit_ubuntu18_pool       
+        setup:
+          runtime:            
+            type: image
+            image:
+              custom:
+                name: drydock/u16node
+                tag: master
+                options: ""
+        triggeredBy:
+          steps:
+            - test2
+        execution:
+          onStart:
+            - printenv
+          onExecute:
+            - printenv
             - echo "hi"
-            - node --version
