@@ -14,7 +14,7 @@ pipelines:
     steps:
       - name: testpipelines
         type: bash
-        configuration:
+#         configuration:
 #           chronological: true #false 
 #           priority: 2
         triggeredBy:
