@@ -14,7 +14,8 @@ pipelines:
     steps:
       - name: testpipelines
         type: bash
-#         configuration:
+        configuration:
+          chronological: true #false 
 #           priority: 2
         triggeredBy:
           resources:
@@ -23,3 +24,13 @@ pipelines:
           onExecute:
             - printenv
             - echo "hi"
+            
+      - name: testpipel
+        type: bash 
+        triggeredBy:
+          steps:
+            - pipeline11
+        execution:
+          onExecute:
+            - echo "hi"
+            - node --version
