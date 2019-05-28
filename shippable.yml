@@ -1,5 +1,5 @@
 resources:
-  - name: sample_ppp
+  - name: sample_job
     type: gitRepo
     repoPath: bindushree16/c7node
     configuration:
@@ -26,7 +26,7 @@ pipelines:
 #           priority: 2
         triggeredBy:
           resources:
-            - sample_ppp
+            - sample_job
         execution:
           onExecute:
             - printenv
