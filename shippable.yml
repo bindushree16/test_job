@@ -15,7 +15,7 @@ pipelines:
       - name: testpipelines
         type: bash
         configuration:
-          chronological: true #false 
+#           chronological: true #false 
 #           priority: 2
         triggeredBy:
           resources:
