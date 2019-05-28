@@ -29,7 +29,7 @@ pipelines:
         type: bash 
         triggeredBy:
           steps:
-            - pipeline11
+            - testpipelines
         execution:
           onExecute:
             - echo "hi"
