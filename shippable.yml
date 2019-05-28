@@ -1,4 +1,5 @@
-
+ # git resources 
+ 
 resources:
   - name: sample_testjob
     type: gitRepo
