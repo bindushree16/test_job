@@ -63,6 +63,8 @@ pipelines:
                 name: pipelines-docker.jfrog.io/jfrog/pipelines-c7cpp
                 tag: 0.9.0
                 options: ""
+        inputResources:
+          - name: sample_testjob        
         inputSteps:
           - name: java
         execution:
@@ -82,6 +84,8 @@ pipelines:
                 name: pipelines-docker.jfrog.io/jfrog/pipelines-c7go
                 tag: 0.9.0
                 options: ""
+        inputResources:
+          - name: sample_testjob        
         inputSteps:
           - name: cpp
         execution:
