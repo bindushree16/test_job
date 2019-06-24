@@ -2,34 +2,28 @@
  
 resources:
   - name: sample_testjob
-    type: gitRepo
-    repoPath: bindushree16/test_job
+    type: GitRepo
     configuration:
-      integrationName: bindu_github
-      branches:
-        only: master
-    initialVersion:
-      sha: master
+      path: bindushree16/test_builds
+      gitProvider: bindu_github
+      buildOn:
+         commit: false 
       
 pipelines:
-  - name: pipelinejob
+  - name: pipelinejobs
     steps:
-      - name: test1
-        type: bash
+      - name: node
+        type: Bash
         configuration:
-          affinityGroup: kermit
-          nodePool: kermit_ubuntu_pool       
-        setup: 
           runtime:            
             type: image
             image:
               custom:
-                name: drydock/c7node
-                tag: master
+                name: pipelines-docker.jfrog.io/jfrog/pipelines-c7node
+                tag: 0.9.0
                 options: ""
-        triggeredBy:
-          resources:
-            - sample_testjob
+        inputResources:
+          - name: sample_testjob
         execution:
           onStart:
             - printenv
@@ -37,48 +31,132 @@ pipelines:
             - printenv
             - echo "hi"
 
-      - name: test2
-        type: bash
+  
+      - name: java
+        type: Bash
         configuration:
-          affinityGroup: kamal
-          nodePool: kermit_ubuntu18_pool
-        setup:
           runtime:            
             type: image
             image:
               custom:
-                name: drydock/u16node
-                tag: master
+                name: pipelines-docker.jfrog.io/jfrog/pipelines-c7java
+                tag: 0.9.0
                 options: ""
-        triggeredBy:
-          steps:
-            - test1
-        execution:
-          onStart:
-            - printenv
-          onExecute:
-            - printenv
-            - echo "hey"
-
-      - name: test3
-        type: bash
-        configuration:
-          affinityGroup: kamal
-          nodePool: kermit_ubuntu18_pool       
-        setup:
-          runtime:            
-            type: image
-            image:
-              custom:
-                name: drydock/u16node
-                tag: master
-                options: ""
-        triggeredBy:
-          steps:
-            - test2
+        inputSteps:
+            - name: node
         execution:
           onStart:
             - printenv
           onExecute:
             - printenv
             - echo "hi"
+  
+      - name: cpp
+        type: Bash
+        configuration:
+          runtime:            
+            type: image
+            image:
+              custom:
+                name: pipelines-docker.jfrog.io/jfrog/pipelines-c7cpp
+                tag: 0.9.0
+                options: ""
+        inputSteps:
+          - name: java
+        execution:
+          onStart:
+            - printenv
+          onExecute:
+            - printenv
+            - echo "hi"
+            
+      - name: go
+        type: Bash
+        configuration:
+          runtime:            
+            type: image
+            image:
+              custom:
+                name: pipelines-docker.jfrog.io/jfrog/pipelines-c7go
+                tag: 0.9.0
+                options: ""
+        inputSteps:
+          - name: cpp
+        execution:
+          onStart:
+            - printenv
+          onExecute:
+            - printenv
+            - echo "hi"       
+  
+  #affinity group
+  
+#     steps:
+#       - name: test1
+#         type: bash
+#         configuration:
+#           affinityGroup: kermit
+#           nodePool: kermit_ubuntu_pool       
+#         setup: 
+#           runtime:            
+#             type: image
+#             image:
+#               custom:
+#                 name: drydock/c7node
+#                 tag: master
+#                 options: ""
+#         triggeredBy:
+#           resources:
+#             - sample_testjob
+#         execution:
+#           onStart:
+#             - printenv
+#           onExecute:
+#             - printenv
+#             - echo "hi"
+
+#       - name: test2
+#         type: bash
+#         configuration:
+#           affinityGroup: kamal
+#           nodePool: kermit_ubuntu18_pool
+#         setup:
+#           runtime:            
+#             type: image
+#             image:
+#               custom:
+#                 name: drydock/u16node
+#                 tag: master
+#                 options: ""
+#         triggeredBy:
+#           steps:
+#             - test1
+#         execution:
+#           onStart:
+#             - printenv
+#           onExecute:
+#             - printenv
+#             - echo "hey"
+
+#       - name: test3
+#         type: bash
+#         configuration:
+#           affinityGroup: kamal
+#           nodePool: kermit_ubuntu18_pool       
+#         setup:
+#           runtime:            
+#             type: image
+#             image:
+#               custom:
+#                 name: drydock/u16node
+#                 tag: master
+#                 options: ""
+#         triggeredBy:
+#           steps:
+#             - test2
+#         execution:
+#           onStart:
+#             - printenv
+#           onExecute:
+#             - printenv
+#             - echo "hi"
