@@ -22,8 +22,8 @@ pipelines:
                 name: pipelines-docker.jfrog.io/jfrog/pipelines-c7node
                 tag: 0.9.0
                 options: ""
-        inputResources:
-          - name: sample_testjob
+          inputResources:
+            - name: sample_testjob
         execution:
           onStart:
             - printenv
@@ -42,9 +42,9 @@ pipelines:
                 name: pipelines-docker.jfrog.io/jfrog/pipelines-c7java
                 tag: 0.9.0
                 options: ""
-        inputResources:
+          inputResources:
             - name: sample_testjob        
-        inputSteps:
+          inputSteps:
             - name: node
         execution:
           onStart:
@@ -84,10 +84,10 @@ pipelines:
                 name: pipelines-docker.jfrog.io/jfrog/pipelines-c7go
                 tag: 0.9.0
                 options: ""
-        inputResources:
-          - name: sample_testjob        
-        inputSteps:
-          - name: cpp
+          inputResources:
+            - name: sample_testjob        
+          inputSteps:
+            - name: cpp
         execution:
           onStart:
             - printenv
