@@ -42,6 +42,8 @@ pipelines:
                 name: pipelines-docker.jfrog.io/jfrog/pipelines-c7java
                 tag: 0.9.0
                 options: ""
+        inputResources:
+            - name: sample_testjob        
         inputSteps:
             - name: node
         execution:
